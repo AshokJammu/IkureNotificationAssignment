@@ -2,6 +2,18 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { loginUserData } from "../Redux/Login/action";
+import HomeNavbar from './HomeNavbar';
+
+function getData(key) {
+  try {
+      let data = localStorage.getItem(key)
+      data = JSON.parse(data)
+      return data
+  }
+  catch{
+      return undefined
+  }
+}
 
 export class Login extends Component {
     constructor(props) {
@@ -38,13 +50,16 @@ export class Login extends Component {
         // const { username, password, submitted } = this.state;
         const { password, email,passwordFlag,idFlag} = this.state;
         const { isLogin,loginData } = this.props;
-        // if(loginData && getData("cutomerExist")){
+       console.log(loginData.error,"logg")
+        if(loginData && getData("cutomerExist")){
 
-        //     if(isLogin && loginData.data[0].userType === "admin"){
-        //       this.props.history.push("/admin/dashboard/all")
-        //     }
-        // }
+            if(isLogin && loginData.data[0].userType === "admin"){
+              this.props.history.push("/admin/dashboard/all")
+            }
+        }
         return (
+          <>
+          {loginData.error === false && <HomeNavbar />}
             <div class="border border-dark mx-5">
             <div class="mb-3 row px-5 my-4">
                <div class="col-sm-10">
@@ -91,7 +106,7 @@ export class Login extends Component {
 
             <Link to="/register" className="btn btn-link">Register</Link>
           </div>
-             
+          </>   
         )
     }
 }

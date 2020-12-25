@@ -18,6 +18,7 @@ export class Register extends Component {
 
     handleRegister=()=>{
         let {fname,lname,age,email,password,company} = this.state
+        
         // console.log(fname,lname,age,email,password,company)
         let obj = {
             fname: fname,
@@ -27,12 +28,12 @@ export class Register extends Component {
             password: password,
              
         }
-
-        console.log(obj)
         this.props.registerUserData(obj)
     }
     render() {
         const {fname,lname,age,email,password} = this.state
+        let {message,registerData} = this.props
+        console.log(registerData,"mess")
         return (
             <div>
                 <div class="border border-dark mx-5">
@@ -115,10 +116,10 @@ export class Register extends Component {
                     })
                   }
                 />
-              </div>
-
-              
+              </div>  
             </div>
+
+             <h6>{registerData}</h6>
             <button class="btn btn-primary btn-center"
               onClick={() => {
                 this.handleRegister();
